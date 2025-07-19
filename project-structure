@@ -1,0 +1,15 @@
+src/
+└── main/
+    ├── java/
+    │   └── com/
+    │       └── charcha/
+    │           ├── controller/        → API endpoints
+    │           ├── service/           → Business logic
+    │           ├── repository/        → MongoDB access layer
+    │           ├── model/             → Database models/entities
+    │           ├── dto/               → Request/Response data models
+    │           ├── config/            → Web/Mongo/security configurations
+    │           └── CharchaApplication.java → Main class
+    └── resources/
+        ├── application.properties     → Project configurations
+        └── static/, templates/        → (for future: UI, if needed)
