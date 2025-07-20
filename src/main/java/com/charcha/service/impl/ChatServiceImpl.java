@@ -1,5 +1,9 @@
 package com.charcha.service.impl;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import com.charcha.model.ChatMessage;
 import com.charcha.repository.ChatMessageRepository;
 import com.charcha.service.ChatService;
@@ -16,12 +20,18 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatMessage saveMessage(ChatMessage message) {
-        message.setTimestamp(System.currentTimeMillis());
+        LocalDateTime now = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(System.currentTimeMillis()),
+                ZoneId.systemDefault()
+        );
+        message.setTimestamp(now);
         return chatMessageRepository.save(message);
     }
 
+
     @Override
     public List<ChatMessage> getMessagesByRegion(String region) {
-        return chatMessageRepository.findByRegion(region);
+        return chatMessageRepository.findByRegionOrderByTimestampAsc(region);
+
     }
 }

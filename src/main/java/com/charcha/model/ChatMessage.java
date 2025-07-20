@@ -16,6 +16,7 @@ public class ChatMessage {
     private String id;
 
     private String senderAnonymousId; // Who sent it
+    private String senderName;        // Add this field for sender's name
     private String region;            // Which region's chatroom
     private String content;           // Message text
     private LocalDateTime timestamp;

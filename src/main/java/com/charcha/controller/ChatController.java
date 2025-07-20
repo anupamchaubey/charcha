@@ -29,7 +29,8 @@ public class ChatController {
 
         ChatMessage message = new ChatMessage();
         message.setSenderName("Anonymous");
-        message.setMessage(messageContent);
+        message.setContent("some text");
+
         message.setRegion(user.getRegion());
         message.setTimestamp(LocalDateTime.now());
 
