@@ -5,17 +5,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Document(collection = "users")
+@Document(collection = "messages")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class ChatMessage {
 
     @Id
     private String id;
 
-    private String anonymousId;  // e.g., User1234
-    private String region;       // Auto-detected region
-    private LocalDateTime joinedAt;
+    private String senderAnonymousId; // Who sent it
+    private String region;            // Which region's chatroom
+    private String content;           // Message text
+    private LocalDateTime timestamp;
 }

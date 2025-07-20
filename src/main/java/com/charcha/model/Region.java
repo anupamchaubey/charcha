@@ -5,17 +5,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Document(collection = "users")
+@Document(collection = "regions")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Region {
 
     @Id
-    private String id;
-
-    private String anonymousId;  // e.g., User1234
-    private String region;       // Auto-detected region
-    private LocalDateTime joinedAt;
+    private String regionName;       // e.g., Gorakhpur, Varanasi
+    private int userCount;
+    private LocalDateTime lastActive;
 }
