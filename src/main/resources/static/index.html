@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Charcha - Regional Anonymous Chat</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        #chatbox {
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+            background: white;
+            margin-top: 20px;
+        }
+        #messageInput {
+            width: 70%;
+        }
+        button {
+            padding: 8px 16px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>📍 Welcome to Charcha</h2>
+
+<div id="registration">
+    <label>Enter Your Region:</label>
+    <input type="text" id="regionInput">
+    <button onclick="register()">Join Chat</button>
+</div>
+
+<div id="chat" style="display:none;">
+    <h3>🧑‍🤝‍🧑 Anonymous Chat for Region: <span id="regionName"></span></h3>
+    <div id="chatbox"></div>
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+    let userId = "";
+    let region = "";
+
+    function register() {
+        region = document.getElementById("regionInput").value.trim();
+        if (!region) {
+            alert("Please enter a region.");
+            return;
+        }
+
+        fetch(`/api/register?region=${region}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                userId = data.id;
+                document.getElementById("registration").style.display = "none";
+                document.getElementById("chat").style.display = "block";
+                document.getElementById("regionName").innerText = region;
+                loadMessages();
+                setInterval(loadMessages, 3000); // refresh every 3 sec
+            })
+            .catch(err => alert("Error registering: " + err));
+    }
+
+    function loadMessages() {
+        fetch(`/api/chat/${region}`)
+            .then(res => res.json())
+            .then(messages => {
+                const chatbox = document.getElementById("chatbox");
+                chatbox.innerHTML = "";
+                messages.forEach(msg => {
+                    const p = document.createElement("p");
+                    p.textContent = `[${msg.timestamp}] ${msg.message}`;
+                    chatbox.appendChild(p);
+                });
+                chatbox.scrollTop = chatbox.scrollHeight;
+            });
+    }
+
+    function sendMessage() {
+        const msg = document.getElementById("messageInput").value.trim();
+        if (!msg) return;
+
+        fetch(`/api/chat/${userId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(msg)
+        })
+            .then(res => res.json())
+            .then(() => {
+                document.getElementById("messageInput").value = "";
+                loadMessages();
+            });
+    }
+</script>
+</body>
+</html>

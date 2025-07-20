@@ -1,4 +1,4 @@
-package com.charcha.charcha;
+package com.charcha;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
