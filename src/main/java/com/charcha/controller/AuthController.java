@@ -1,5 +1,6 @@
 package com.charcha.controller;
 
+import com.charcha.dto.LoginRequest;
 import com.charcha.model.User;
 import com.charcha.repository.UserRepository;
 import com.charcha.security.JwtUtil;
@@ -56,9 +57,10 @@ public class AuthController {
      * Authenticates a user and returns a JWT token.
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String username,
-                                   @RequestParam String password,
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest,
                                    HttpServletRequest request) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
         try {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (Exception ex) {
