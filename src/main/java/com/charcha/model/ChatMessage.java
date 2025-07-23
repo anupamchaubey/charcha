@@ -3,6 +3,7 @@ package com.charcha.model;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 
 @Document(collection = "messages")
@@ -15,9 +16,8 @@ public class ChatMessage {
     @Id
     private String id;
 
-    private String senderAnonymousId; // Who sent it
-    private String senderName;        // Add this field for sender's name
-    private String region;            // Which region's chatroom
-    private String content;           // Message text
-    private LocalDateTime timestamp;
+    private String senderName;         // Random anonymous name like "HappyLion1234"
+    private String region;             // Region-based group
+    private String content;            // Chat content
+    private LocalDateTime timestamp;   // Timestamp of message
 }
